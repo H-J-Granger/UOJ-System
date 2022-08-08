@@ -1189,16 +1189,16 @@ RunCompilerResult compile_java11(const string &name, const string &path = work_p
 RunCompilerResult compile(const char *name)  {
 	string lang = conf_str(string(name) + "_language");
 
-	if (lang == "C++" || lang == "C++11" || lang == "C")
-	{
-		RunCompilerResult res;
-		res.type = RS_DGS;
-		res.ust = -1;
-		res.usm = -1;
-		res.succeeded = false;
-		res.info = "Compile Failed";
-		return res;
-	}
+	// if (lang == "C++" || lang == "C++11" || lang == "C")
+	// {
+	// 	RunCompilerResult res;	
+	// 	res.type = RS_DGS;
+	// 	res.ust = -1;
+	// 	res.usm = -1;
+	// 	res.succeeded = false;
+	// 	res.info = "Compile Failed";
+	// 	return res;
+	// }
 
 	if (lang == "C++") {
 		return compile_cpp(name);
