@@ -1136,7 +1136,7 @@ RunCompilerResult prepare_java_source(const string &name, const string &path = w
 
 RunCompilerResult compile_c(const string &name, const string &path = work_path) {
 	return run_compiler(path.c_str(), 
-			"/usr/bin/gcc", "-o", name.c_str(), "-x", "c", (name + ".code").c_str(), "-lm", "-O2", "-DONLINE_JUDGE", NULL);
+			"/usr/bin/gcc", "-o", name.c_str(), "-x", "c", (name + ".code").c_str(), "-lm", "-O2", "-DONLINE_JUDGE", "-fno-asm", NULL);
 }
 RunCompilerResult compile_pas(const string &name, const string &path = work_path) {
 	return run_compiler(path.c_str(),
@@ -1144,11 +1144,11 @@ RunCompilerResult compile_pas(const string &name, const string &path = work_path
 }
 RunCompilerResult compile_cpp(const string &name, const string &path = work_path) {
 	return run_compiler(path.c_str(),
-			"/usr/bin/g++", "-o", name.c_str(), "-x", "c++", (name + ".code").c_str(), "-lm", "-O2", "-DONLINE_JUDGE", NULL);
+			"/usr/bin/g++", "-o", name.c_str(), "-x", "c++", (name + ".code").c_str(), "-lm", "-O2", "-DONLINE_JUDGE", "-fno-asm", NULL);
 }
 RunCompilerResult compile_cpp11(const string &name, const string &path = work_path) {
 	return run_compiler(path.c_str(),
-			"/usr/bin/g++", "-o", name.c_str(), "-x", "c++", (name + ".code").c_str(), "-lm", "-O2", "-DONLINE_JUDGE", "-std=c++11", NULL);
+			"/usr/bin/g++", "-o", name.c_str(), "-x", "c++", (name + ".code").c_str(), "-lm", "-O2", "-DONLINE_JUDGE", "-std=c++11", "-fno-asm", NULL);
 }
 RunCompilerResult compile_python2(const string &name, const string &path = work_path) {
 	return run_compiler(path.c_str(),
@@ -1189,7 +1189,7 @@ RunCompilerResult compile_java11(const string &name, const string &path = work_p
 RunCompilerResult compile(const char *name)  {
 	string lang = conf_str(string(name) + "_language");
 
-	if ((lang == "C++" || lang == "C++11" || lang == "C") && has_illegal_keywords_in_file(work_path + "/" + name + ".code"))
+	if (lang == "C++" || lang == "C++11" || lang == "C")
 	{
 		RunCompilerResult res;
 		res.type = RS_DGS;
@@ -1232,7 +1232,7 @@ RunCompilerResult compile(const char *name)  {
 
 RunCompilerResult compile_c_with_implementer(const string &name, const string &path = work_path) {
 	return run_compiler(path.c_str(), 
-			"/usr/bin/gcc", "-o", name.c_str(), "implementer.c", "-x", "c", (name + ".code").c_str(), "-lm", "-O2", "-DONLINE_JUDGE", NULL);
+			"/usr/bin/gcc", "-o", name.c_str(), "implementer.c", "-x", "c", (name + ".code").c_str(), "-lm", "-O2", "-DONLINE_JUDGE", "-fno-asm", NULL);
 }
 RunCompilerResult compile_pas_with_implementer(const string &name, const string &path = work_path) {
 	executef("cp %s %s", (path + "/" + name + ".code").c_str(), (path + "/" + conf_str(name + "_unit_name") + ".pas").c_str());
@@ -1241,11 +1241,11 @@ RunCompilerResult compile_pas_with_implementer(const string &name, const string 
 }
 RunCompilerResult compile_cpp_with_implementer(const string &name, const string &path = work_path) {
 	return run_compiler(path.c_str(),
-			"/usr/bin/g++", "-o", name.c_str(), "implementer.cpp", "-x", "c++", (name + ".code").c_str(), "-lm", "-O2", "-DONLINE_JUDGE", NULL);
+			"/usr/bin/g++", "-o", name.c_str(), "implementer.cpp", "-x", "c++", (name + ".code").c_str(), "-lm", "-O2", "-DONLINE_JUDGE", "-fno-asm", NULL);
 }
 RunCompilerResult compile_cpp11_with_implementer(const string &name, const string &path = work_path) {
 	return run_compiler(path.c_str(),
-			"/usr/bin/g++", "-o", name.c_str(), "implementer.cpp", "-x", "c++", (name + ".code").c_str(), "-lm", "-O2", "-DONLINE_JUDGE", "-std=c++11", NULL);
+			"/usr/bin/g++", "-o", name.c_str(), "implementer.cpp", "-x", "c++", (name + ".code").c_str(), "-lm", "-O2", "-DONLINE_JUDGE", "-std=c++11", "-fno-asm", NULL);
 }
 /*
 RunCompilerResult compile_python2(const string &name, const string &path = work_path) {
@@ -1261,16 +1261,16 @@ RunCompilerResult compile_python3(const string &name, const string &path = work_
 RunCompilerResult compile_with_implementer(const char *name)  {
 	string lang = conf_str(string(name) + "_language");
 
-	if (has_illegal_keywords_in_file(work_path + "/" + name + ".code"))
-	{
-		RunCompilerResult res;
-		res.type = RS_DGS;
-		res.ust = -1;
-		res.usm = -1;
-		res.succeeded = false;
-		res.info = "Compile Failed";
-		return res;
-	}
+	// if (has_illegal_keywords_in_file(work_path + "/" + name + ".code"))
+	// {
+	// 	RunCompilerResult res;
+	// 	res.type = RS_DGS;
+	// 	res.ust = -1;
+	// 	res.usm = -1;
+	// 	res.succeeded = false;
+	// 	res.info = "Compile Failed";
+	// 	return res;
+	// }
 
 	if (lang == "C++") {
 		return compile_cpp_with_implementer(name);
