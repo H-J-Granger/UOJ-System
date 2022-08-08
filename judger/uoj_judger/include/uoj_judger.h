@@ -1142,13 +1142,21 @@ RunCompilerResult compile_pas(const string &name, const string &path = work_path
 	return run_compiler(path.c_str(),
 			"/usr/bin/fpc", (name + ".code").c_str(), "-O2", NULL);
 }
-RunCompilerResult compile_cpp(const string &name, const string &path = work_path) {
+RunCompilerResult compile_cpp03(const string &name, const string &path = work_path) {
 	return run_compiler(path.c_str(),
-			"/usr/bin/g++", "-o", name.c_str(), "-x", "c++", (name + ".code").c_str(), "-lm", "-O2", "-DONLINE_JUDGE", "-fno-asm", NULL);
+			"/usr/bin/g++", "-o", name.c_str(), "-x", "c++", (name + ".code").c_str(), "-lm", "-O2", "-DONLINE_JUDGE", "-std=c++03", "-fno-asm", NULL);
 }
 RunCompilerResult compile_cpp11(const string &name, const string &path = work_path) {
 	return run_compiler(path.c_str(),
 			"/usr/bin/g++", "-o", name.c_str(), "-x", "c++", (name + ".code").c_str(), "-lm", "-O2", "-DONLINE_JUDGE", "-std=c++11", "-fno-asm", NULL);
+}
+RunCompilerResult compile_cpp14(const string &name, const string &path = work_path) {
+	return run_compiler(path.c_str(),
+			"/usr/bin/g++", "-o", name.c_str(), "-x", "c++", (name + ".code").c_str(), "-lm", "-O2", "-DONLINE_JUDGE", "-std=c++14", "-fno-asm", NULL);
+}
+RunCompilerResult compile_cpp17(const string &name, const string &path = work_path) {
+	return run_compiler(path.c_str(),
+			"/usr/bin/g++", "-o", name.c_str(), "-x", "c++", (name + ".code").c_str(), "-lm", "-O2", "-DONLINE_JUDGE", "-std=c++17", "-fno-asm", NULL);
 }
 RunCompilerResult compile_python2(const string &name, const string &path = work_path) {
 	return run_compiler(path.c_str(),
@@ -1200,11 +1208,17 @@ RunCompilerResult compile(const char *name)  {
 	// 	return res;
 	// }
 
-	if (lang == "C++") {
-		return compile_cpp(name);
+	if (lang == "C++03") {
+		return compile_cpp03(name);
 	}
 	if (lang == "C++11") {
 		return compile_cpp11(name);
+	}
+	if (lang == "C++14") {
+		return compile_cpp14(name);
+	}
+	if (lang == "C++17") {
+		return compile_cpp17(name);
 	}
 	if (lang == "Python2") {
 		return compile_python2(name);
@@ -1239,13 +1253,21 @@ RunCompilerResult compile_pas_with_implementer(const string &name, const string 
 	return run_compiler(path.c_str(),
 			"/usr/bin/fpc", "implementer.pas", ("-o" + name).c_str(), "-O2", NULL);
 }
-RunCompilerResult compile_cpp_with_implementer(const string &name, const string &path = work_path) {
+RunCompilerResult compile_cpp03_with_implementer(const string &name, const string &path = work_path) {
 	return run_compiler(path.c_str(),
-			"/usr/bin/g++", "-o", name.c_str(), "implementer.cpp", "-x", "c++", (name + ".code").c_str(), "-lm", "-O2", "-DONLINE_JUDGE", "-fno-asm", NULL);
+			"/usr/bin/g++", "-o", name.c_str(), "implementer.cpp", "-x", "c++", (name + ".code").c_str(), "-lm", "-O2", "-DONLINE_JUDGE", "-std=c++03", "-fno-asm", NULL);
 }
 RunCompilerResult compile_cpp11_with_implementer(const string &name, const string &path = work_path) {
 	return run_compiler(path.c_str(),
 			"/usr/bin/g++", "-o", name.c_str(), "implementer.cpp", "-x", "c++", (name + ".code").c_str(), "-lm", "-O2", "-DONLINE_JUDGE", "-std=c++11", "-fno-asm", NULL);
+}
+RunCompilerResult compile_cpp14_with_implementer(const string &name, const string &path = work_path) {
+	return run_compiler(path.c_str(),
+			"/usr/bin/g++", "-o", name.c_str(), "implementer.cpp", "-x", "c++", (name + ".code").c_str(), "-lm", "-O2", "-DONLINE_JUDGE", "-std=c++14", "-fno-asm", NULL);
+}
+RunCompilerResult compile_cpp17_with_implementer(const string &name, const string &path = work_path) {
+	return run_compiler(path.c_str(),
+			"/usr/bin/g++", "-o", name.c_str(), "implementer.cpp", "-x", "c++", (name + ".code").c_str(), "-lm", "-O2", "-DONLINE_JUDGE", "-std=c++17", "-fno-asm", NULL);
 }
 /*
 RunCompilerResult compile_python2(const string &name, const string &path = work_path) {
@@ -1272,11 +1294,17 @@ RunCompilerResult compile_with_implementer(const char *name)  {
 	// 	return res;
 	// }
 
-	if (lang == "C++") {
-		return compile_cpp_with_implementer(name);
+	if (lang == "C++03") {
+		return compile_cpp03_with_implementer(name);
 	}
 	if (lang == "C++11") {
 		return compile_cpp11_with_implementer(name);
+	}
+	if (lang == "C++14") {
+		return compile_cpp14_with_implementer(name);
+	}
+	if (lang == "C++17") {
+		return compile_cpp17_with_implementer(name);
 	}
 	if (lang == "C") {
 		return compile_c_with_implementer(name);
